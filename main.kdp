@@ -1,0 +1,1505 @@
+Methode zuHause
+    wiederhole solange nicht IstWesten
+        RechtsDrehen
+    endewiederhole
+    wiederhole solange nicht IstWand
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    wiederhole solange nicht IstWand
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+{goto Methoden}
+
+Methode GotoTmpA
+    zuHause
+    wiederhole 11 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+    Schritt
+    RechtsDrehen
+endeMethode
+
+Methode GotoTmpB
+    zuHause
+    wiederhole 11 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+    wiederhole 3 mal
+        Schritt
+    endewiederhole
+    RechtsDrehen
+endeMethode
+
+Methode GotoAkk
+    zuHause
+    wiederhole 11 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+    wiederhole 5 mal
+        Schritt
+    endewiederhole
+    RechtsDrehen
+endeMethode
+
+Methode GotoMemStart
+    zuHause
+    wiederhole 20 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+endeMethode
+
+Methode GotoMemDeref
+    GotoMemStart
+    wiederhole solange nicht IstMarke(gelb)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    Schritt
+endeMethode
+
+Methode GotoAktInst
+    zuHause
+    Schritt
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+endeMethode
+
+Methode GotoCallStack
+    zuHause
+    wiederhole 30 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+    wiederhole solange nicht IstMarke(gelb)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    Schritt
+endeMethode
+
+
+
+{Methoden für Zahlen}
+{Geht von Blickrichtung Süden bei Start von Zelle aus}
+
+Methode InitZahl
+    MarkeSetzen(rot)
+    wiederhole 7 mal
+        Schritt
+    endewiederhole
+    MarkeSetzen(blau)
+    RechtsDrehen
+    RechtsDrehen
+    wiederhole 7 mal
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+Methode ZahlSetNeg
+    LinksDrehen
+    Schritt
+    MarkeLöschen
+    MarkeSetzen(grün)
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    LinksDrehen
+endeMethode
+
+Methode ZahlResetNeg
+    LinksDrehen
+    Schritt
+    MarkeLöschen
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    LinksDrehen
+endeMethode
+
+Methode ZahlSetInv
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    MarkeLöschen
+    MarkeSetzen(gelb)
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+endeMethode
+
+Methode ZahlResetInv
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    MarkeLöschen
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+endeMethode
+
+Bedingung IstZahlNull
+    wahr
+    wiederhole solange nicht IstMarke(blau)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    
+    wiederhole solange nicht IstMarke(rot)
+        wenn IstZiegel dann
+            falsch
+        endewenn
+        
+        LinksDrehen
+        Schritt
+        RechtsDrehen
+    endewiederhole
+
+    RechtsDrehen
+endeBedingung
+
+Bedingung IstZahlNegativ
+    falsch
+    LinksDrehen
+    Schritt
+    wenn IstMarke(grün) dann
+        wahr
+    endewenn
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    LinksDrehen
+endeBedingung
+
+Bedingung IstZahlInvertiert
+    falsch
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    wenn IstMarke(gelb) dann
+        wahr
+    endewenn
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+endeBedingung
+
+Methode IncZahl
+    wenn nicht IstZahlNegativ dann
+        Schritt
+        LinksDrehen
+
+        wiederhole solange nicht IstMarke(blau)
+            Hinlegen
+            wenn IstZiegel(10) dann
+                wiederhole solange IstZiegel
+                    Aufheben
+                endewiederhole
+                RechtsDrehen
+                Schritt
+                LinksDrehen
+            sonst
+                RechtsDrehen
+                wiederhole solange nicht IstMarke(blau)
+                    Schritt
+                endewiederhole
+                LinksDrehen
+            endewenn
+        endewiederhole
+
+        LinksDrehen
+        wiederhole solange nicht IstMarke(rot)
+            Schritt
+        endewiederhole
+        RechtsDrehen
+        RechtsDrehen
+    sonst
+        Schritt
+        LinksDrehen
+        
+        wiederhole solange NichtIstMarke(rot)
+            wenn IstZiegel dann
+                Aufheben
+                LinksDrehen
+                wiederhole solange NichtIstMarke(rot)
+                    Schritt
+                endewiederhole
+                RechtsDrehen
+                RechtsDrehen
+            sonst
+
+                wiederhole 9 mal
+                    Hinlegen
+                endewiederhole
+                
+                RechtsDrehen
+                Schritt
+                LinksDrehen
+            endewenn
+        endewiederhole
+
+        wenn IstZahlNull dann
+            ZahlResetNeg
+        endewenn
+    endewenn
+endeMethode
+
+Methode DecZahl
+    wenn IstZahlNull dann
+        ZahlSetNeg
+    endewenn
+
+    wenn nicht IstZahlNegativ dann
+        Schritt
+        LinksDrehen
+        
+        wiederhole solange NichtIstMarke(rot)
+            wenn IstZiegel dann
+                Aufheben
+                LinksDrehen
+                wiederhole solange NichtIstMarke(rot)
+                    Schritt
+                endewiederhole
+                RechtsDrehen
+                RechtsDrehen
+            sonst
+
+                wiederhole 9 mal
+                    Hinlegen
+                endewiederhole
+                
+                RechtsDrehen
+                Schritt
+                LinksDrehen
+            endewenn
+        endewiederhole
+    sonst
+        Schritt
+        LinksDrehen
+
+        wiederhole solange nicht IstMarke(blau)
+            Hinlegen
+            wenn IstZiegel(10) dann
+                wiederhole solange IstZiegel
+                    Aufheben
+                endewiederhole
+                RechtsDrehen
+                Schritt
+                LinksDrehen
+            sonst
+                RechtsDrehen
+                wiederhole solange nicht IstMarke(blau)
+                    Schritt
+                endewiederhole
+                LinksDrehen
+            endewenn
+        endewiederhole
+
+        LinksDrehen
+        wiederhole solange nicht IstMarke(rot)
+            Schritt
+        endewiederhole
+        RechtsDrehen
+        RechtsDrehen
+    endewenn
+endeMethode
+
+Methode IncZahlBetrag
+    wenn nicht IstZahlNegativ dann
+        IncZahl
+    sonst
+        DecZahl
+    endewenn
+endeMethode
+
+Methode DecZahlBetrag
+    wenn nicht IstZahlNull dann
+        wenn nicht IstZahlNegativ dann
+            DecZahl
+        sonst
+            IncZahl
+        endewenn
+    endewenn
+endeMethode
+
+Methode ResetZahl
+    ZahlResetNeg
+    Schritt
+    LinksDrehen
+    wiederhole solange nicht IstMarke(blau)
+        wiederhole solange IstZiegel
+            Aufheben
+        endewiederhole
+        RechtsDrehen
+        Schritt
+        LinksDrehen
+    endewiederhole
+    LinksDrehen
+    Schritt
+    wiederhole solange nicht IstMarke
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+Methode InvertZahl
+    Schritt
+    LinksDrehen
+    wiederhole solange nicht IstMarke(blau)
+        wenn nicht IstZiegel dann
+            Hinlegen(9)
+        sonst
+            wenn IstZiegel(9) dann
+                Aufheben(9)
+            endewenn
+        endewenn
+        wenn IstZiegel(1) dann
+            Aufheben(1)
+            Hinlegen(8)
+        sonst
+            wenn IstZiegel(8) dann
+                Aufheben(8)
+                Hinlegen(1)
+            endewenn
+        endewenn
+
+        wenn IstZiegel(2) dann
+            Aufheben(2)
+            Hinlegen(7)
+        sonst
+            wenn IstZiegel(7) dann
+                Aufheben(7)
+                Hinlegen(2)
+            endewenn
+        endewenn
+        wenn IstZiegel(3) dann
+            Aufheben(3)
+            Hinlegen(6)
+        sonst
+            wenn IstZiegel(6) dann
+                Aufheben(6)
+                Hinlegen(3)
+            endewenn
+        endewenn
+        wenn IstZiegel(4) dann
+            Aufheben(4)
+            Hinlegen(5)
+        sonst
+            wenn IstZiegel(5) dann
+                Aufheben(5)
+                Hinlegen(4)
+            endewenn
+        endewenn
+        
+        RechtsDrehen
+        Schritt
+        LinksDrehen
+    endewiederhole
+
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+
+
+
+{Transfer}
+
+Methode SetupTransfer
+    Schritt
+    MarkeSetzen(grün)
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+Bedingung IstTransferFertig
+    wahr
+    wiederhole solange nicht IstMarke(blau)
+        Schritt
+        wenn IstMarke(grün) dann
+            falsch
+        endewenn
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeBedingung
+
+Bedingung IstTransferZiegel
+    wiederhole solange nicht IstMarke(grün)
+        Schritt
+    endewiederhole
+    LinksDrehen
+    wenn IstZiegel dann
+        wahr
+    sonst
+        falsch
+    endewenn
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeBedingung
+
+Methode IncTransferZiegel
+    wiederhole solange nicht IstMarke(grün)
+        Schritt
+    endewiederhole
+    LinksDrehen
+    Hinlegen
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+Methode DecTransferZiegel
+    wiederhole solange nicht IstMarke(grün)
+        Schritt
+    endewiederhole
+    LinksDrehen
+    Aufheben
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+Methode TransferSchritt
+    wiederhole solange nicht IstMarke(grün)
+        Schritt
+    endewiederhole
+    MarkeLöschen
+    Schritt
+    wenn nicht IstMarke(blau) dann
+        MarkeSetzen(grün)
+    endewenn
+    RechtsDrehen
+    RechtsDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    RechtsDrehen
+    RechtsDrehen
+endeMethode
+
+
+{Memory Pointer Sschitt}
+
+Methode DerefMemTmpB
+    GotoMemStart
+    Schritt
+    MarkeLöschen
+    MarkeSetzen(gelb)    
+
+    GotoTmpB
+    wiederhole solange nicht IstZahlNull
+        DecZahlBetrag
+        GotoMemStart
+        wiederhole solange nicht IstMarke(gelb)
+            Schritt
+        endewiederhole
+        MarkeLöschen
+        RechtsDrehen
+        Schritt
+        MarkeSetzen(rot)
+        RechtsDrehen
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+        Schritt
+        Schritt
+        
+        RechtsDrehen
+        Schritt
+        wenn nicht IstMarke(rot) dann
+            InitZahl
+        endewenn
+        RechtsDrehen
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+        
+        MarkeLöschen
+        MarkeSetzen(gelb)
+
+        GotoTmpB
+    endewiederhole
+endeMethode
+
+Methode ClearMemPtr
+    GotoMemStart
+    wiederhole solange nicht IstMarke(gelb)
+        Schritt
+    endewiederhole
+    MarkeLöschen
+endeMethode
+
+{"Microcode"}
+
+Methode ArgToTmpAB 
+    GotoAktInst
+    RechtsDrehen
+    SetupTransfer
+
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+    GotoTmpB
+    ResetZahl
+    SetupTransfer
+    
+    GotoAktInst
+    RechtsDrehen
+    wenn IstZahlNegativ dann
+        GotoTmpA
+        ZahlSetNeg
+        GotoTmpB
+        ZahlSetNeg
+    endewenn
+
+    GotoAktInst
+    RechtsDrehen
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoTmpB
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoTmpB
+            TransferSchritt
+        endewenn
+        GotoAktInst
+        RechtsDrehen
+    endewiederhole
+endeMethode
+
+Methode TmpAToArg   
+    GotoTmpA
+    SetupTransfer
+
+    GotoAktInst
+    RechtsDrehen
+    ResetZahl
+    SetupTransfer
+    
+    GotoTmpA
+    wenn IstZahlNegativ dann
+        GotoAktInst
+        RechtsDrehen
+        ZahlSetNeg
+    endewenn
+
+    GotoTmpA
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoAktInst
+            RechtsDrehen
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoAktInst
+            RechtsDrehen
+            TransferSchritt
+        endewenn
+        GotoTmpA
+    endewiederhole
+endeMethode
+
+Methode MemToAkkTmpA
+    GotoMemDeref
+    SetupTransfer
+
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+    GotoAkk
+    ResetZahl
+    SetupTransfer
+
+    GotoMemDeref
+    wenn IstZahlNegativ dann
+        GotoTmpA
+        ZahlSetNeg
+        GotoAkk
+        ZahlSetNeg
+    endewenn
+    
+    GotoMemDeref
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoAkk
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoAkk
+            TransferSchritt
+        endewenn
+        GotoMemDeref
+    endewiederhole
+endeMethode
+
+Methode TmpAToMem
+    GotoTmpA
+    SetupTransfer
+    
+    GotoMemDeref
+    ResetZahl
+    SetupTransfer
+    
+    GotoTmpA
+    wenn IstZahlNegativ dann
+        GotoMemDeref
+        ZahlSetNeg
+    endewenn
+
+    GotoTmpA
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoMemDeref
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoMemDeref
+            TransferSchritt
+        endewenn
+        GotoTmpA
+    endewiederhole
+endeMethode
+
+Methode AkkToMemTmpA
+    GotoAkk
+    SetupTransfer
+    
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+    GotoMemDeref
+    ResetZahl
+    SetupTransfer
+
+    GotoAkk
+    wenn IstZahlNegativ dann
+        GotoTmpA
+        ZahlSetNeg
+        GotoMemDeref
+        ZahlSetNeg
+    endewenn
+    
+    GotoAkk
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoMemDeref
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoMemDeref
+            TransferSchritt
+        endewenn
+        GotoAkk
+    endewiederhole
+endeMethode
+
+Methode TmpAToAkk
+    GotoTmpA
+    SetupTransfer
+
+    GotoAkk
+    ResetZahl
+    SetupTransfer
+    
+    GotoTmpA
+    wenn IstZahlNegativ dann
+        GotoAkk
+        ZahlSetNeg
+    endewenn
+
+    GotoTmpA
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoAkk
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoAkk
+            TransferSchritt
+        endewenn
+        GotoTmpA
+    endewiederhole
+endeMethode
+
+{CPU-Befehle}
+
+Methode lda    
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {deref mem mit tmpB}
+    DerefMemTmpB
+
+    {mem -> tmpA, akk}
+    MemToAkkTmpA
+
+    {tmpA -> mem}
+    TmpAToMem
+
+    {mem ptr clr}
+    ClearMemPtr 
+    
+endeMethode
+
+Methode sta    
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {deref mem mit tmpB}
+    DerefMemTmpB
+
+    {clear mem}
+    GotoMemDeref
+    ResetZahl
+
+    {akk -> mem, tmpA}
+    AkkToMemTmpA
+
+    {mem ptr clr}
+    ClearMemPtr
+
+    {tmpA -> Akk}
+    TmpAToAkk
+endeMethode
+
+Methode add    
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {deref mem mit tmpB}
+    DerefMemTmpB
+
+    {mem -> tmpA, tmpB}
+    GotoMemDeref
+    wenn IstZahlNegativ dann
+        GotoTmpA
+        ZahlSetNeg
+        GotoTmpB
+        ZahlSetNeg
+    endewenn
+
+    GotoMemDeref
+    SetupTransfer
+    GotoTmpA
+    SetupTransfer
+    GotoTmpB
+    SetupTransfer
+    
+    GotoMemDeref
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoTmpB
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoTmpB
+            TransferSchritt
+        endewenn
+        GotoMemDeref
+    endewiederhole
+
+    {tmpA -> mem}
+    TmpAToMem
+
+    {mem ptr clr}
+    ClearMemPtr
+
+    {tmpB +> Akk}
+    GotoAkk
+    wenn IstZahlNegativ dann
+        InvertZahl
+        IncZahlBetrag
+        ZahlSetInv
+    endewenn
+
+    GotoTmpB
+    wenn IstZahlNegativ dann
+        InvertZahl
+        IncZahlBetrag
+        
+        GotoAkk
+        ZahlSetInv
+        ZahlSetNeg
+    endewenn
+    
+    GotoTmpB
+    SetupTransfer
+    GotoAkk
+    SetupTransfer
+    
+    GotoTmpB
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoAkk
+            IncTransferZiegel
+            
+            {Check Carry}
+            Schritt
+            LinksDrehen
+            wiederhole solange nicht IstMarke(blau)
+                wenn IstZiegel(10) dann
+                    wiederhole solange IstZiegel
+                        Aufheben
+                    endewiederhole
+                    RechtsDrehen
+                    Schritt
+                    LinksDrehen
+                    Hinlegen
+                    LinksDrehen
+                    Schritt
+                    RechtsDrehen
+                endewenn
+                RechtsDrehen
+                Schritt
+                LinksDrehen
+            endewiederhole
+            
+            {Overflow}
+            wenn IstZiegel dann
+                Aufheben
+                LinksDrehen
+                wiederhole solange NichtIstMarke(rot)
+                    Schritt
+                endewiederhole
+                RechtsDrehen
+                RechtsDrehen
+                
+                ZahlResetInv
+                ZahlResetNeg
+            endewenn
+            
+            LinksDrehen
+            wiederhole solange NichtIstMarke(rot)
+                Schritt
+            endewiederhole
+            RechtsDrehen
+            RechtsDrehen
+        sonst
+            TransferSchritt
+            GotoAkk
+            TransferSchritt
+        endewenn
+        GotoTmpB
+    endewiederhole
+    
+    GotoAkk
+    wenn IstZahlInvertiert dann
+        InvertZahl
+        IncZahlBetrag
+        ZahlResetInv
+    endewenn
+endeMethode
+
+Methode neg
+    GotoAkk
+    
+    wenn nicht IstZahlNegativ dann
+        ZahlSetNeg
+    sonst
+        ZahlResetNeg
+    endewenn
+endeMethode
+
+Methode jmp
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+    
+    {Clr Inst Ptr}
+    GotoAktInst
+    MarkeLöschen
+
+    {Instr Ptr mit tmpB}
+    zuHause
+    Schritt
+    LinksDrehen
+    Schritt
+    MarkeSetzen(rot)
+    
+    GotoTmpB
+    DecZahlBetrag
+    wiederhole solange nicht IstZahlNull
+        zuHause
+        Schritt
+        LinksDrehen
+        wiederhole solange nicht IstMarke(rot)
+            Schritt
+        endewiederhole
+        MarkeLöschen
+        Schritt
+        Schritt
+        MarkeSetzen(rot)
+        
+        GotoTmpB
+        DecZahlBetrag
+    endewiederhole
+endeMethode
+
+Methode jnz
+    GotoAkk
+    wenn nicht IstZahlNull dann
+        jmp
+    endewenn
+endeMethode
+
+Methode ldad
+    
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {deref Mem mit tmpB}
+    DerefMemTmpB
+
+    {mem -> tmpA, tmpB}
+    GotoMemDeref
+    SetupTransfer
+
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+    GotoTmpB
+    ResetZahl
+    SetupTransfer
+    
+    GotoMemDeref
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoTmpB
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoTmpB
+            TransferSchritt
+        endewenn
+        GotoMemDeref
+    endewiederhole
+    
+    {tmpA -> mem}
+    TmpAToMem
+    
+    {deref Mem mit tmpB}
+    ClearMemPtr
+    DerefMemTmpB
+
+    {mem -> tmpA, akk}
+    MemToAkkTmpA
+
+    {tmpA -> mem}
+    TmpAToMem
+    
+    ClearMemPtr
+endeMethode
+
+Methode stad
+    GotoTmpA
+    ResetZahl
+    GotoTmpB
+    ResetZahl
+    
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {deref Mem mit tmpB}
+    DerefMemTmpB
+
+    {mem -> tmpA, tmpB}
+    GotoMemDeref
+    SetupTransfer
+
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+    GotoTmpB
+    ResetZahl
+    SetupTransfer
+    
+    GotoMemDeref
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoTmpB
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoTmpB
+            TransferSchritt
+        endewenn
+        GotoMemDeref
+    endewiederhole
+    
+    {tmpA -> mem}
+    TmpAToMem
+    
+    {deref Mem mit tmpB}
+    ClearMemPtr
+    DerefMemTmpB
+
+    {Akk -> mem, tmpA}
+    AkkToMemTmpA
+
+    {tmpA -> Akk}
+    TmpAToAkk
+    
+    ClearMemPtr
+endeMethode
+
+Methode mka
+    GotoTmpA
+    ResetZahl
+    GotoAkk
+    ResetZahl
+    
+    GotoAktInst
+    RechtsDrehen
+    wenn IstZahlNegativ dann
+        GotoTmpA
+        ZahlSetNeg
+        GotoAkk
+        ZahlSetNeg
+        GotoAktInst
+        RechtsDrehen
+    endewenn
+    
+    {arg -> tmpA, akk}
+    GotoAktInst
+    RechtsDrehen
+    SetupTransfer
+    GotoTmpA
+    SetupTransfer
+    GotoAkk
+    SetupTransfer
+    
+    GotoAktInst
+    RechtsDrehen
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+            GotoAkk
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+            GotoAkk
+            TransferSchritt
+        endewenn
+        GotoAktInst
+        RechtsDrehen
+    endewiederhole
+    
+    {tmpA -> arg}
+    TmpAToArg
+endeMethode
+
+Methode call
+    {arg -> tmpA, tmpB}
+    ArgToTmpAB
+
+    {tmpA -> arg}
+    TmpAToArg
+
+    {inc callstack ptr}
+    GotoCallStack
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    MarkeLöschen
+    RechtsDrehen
+    Schritt
+    Schritt
+    MarkeSetzen(gelb)
+    RechtsDrehen
+    Schritt
+    wenn nicht IstMarke(rot) dann
+        InitZahl
+    endewenn
+
+    {instr ptr -> tmpA}
+    GotoTmpA
+    ResetZahl
+    
+    zuHause
+    Schritt
+    LinksDrehen
+    Schritt
+    wenn nicht IstMarke(rot) dann
+        MarkeSetzen(gelb)
+        wiederhole solange nicht IstMarke(rot)
+            MarkeLöschen
+            Schritt
+            Schritt
+            MarkeSetzen(gelb)
+            GotoTmpA
+            IncZahl
+            
+            zuHause
+            Schritt
+            LinksDrehen
+            wiederhole solange nicht IstNorden
+                Schritt
+                wenn IstMarke(gelb) dann
+                    LinksDrehen
+                endewenn    
+                wenn IstMarke(rot) dann
+                    LinksDrehen
+                endewenn
+            endewiederhole
+            RechtsDrehen
+            
+        endewiederhole
+    endewenn
+    
+    {tmpA + 1}
+    GotoTmpA
+    IncZahl
+    
+    {tmpA -> callstack}
+    GotoTmpA
+    SetupTransfer
+    
+    GotoCallStack
+    ResetZahl
+    SetupTransfer
+
+    GotoTmpA
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoCallStack
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoCallStack
+            TransferSchritt
+        endewenn
+        GotoTmpA
+    endewiederhole
+    
+    {instr ptr mit tmpB}
+    GotoAktInst
+    MarkeLöschen
+    zuHause
+    Schritt
+    LinksDrehen
+    Schritt
+    MarkeSetzen(rot)
+    
+    GotoTmpB
+    DecZahlBetrag
+    wiederhole solange nicht IstZahlNull
+        zuHause
+        Schritt
+        LinksDrehen
+        wiederhole solange nicht IstMarke(rot)
+            Schritt
+        endewiederhole
+        MarkeLöschen
+        Schritt
+        Schritt
+        MarkeSetzen(rot)
+        
+        GotoTmpB
+        DecZahlBetrag
+    endewiederhole
+endeMethode
+
+Methode ret
+    {callstack -> tmpA}
+    GotoCallStack
+    SetupTransfer
+    
+    GotoTmpA
+    ResetZahl
+    SetupTransfer
+
+    GotoCallStack
+    wiederhole solange nicht IstTransferFertig
+        wenn IstTransferZiegel dann
+            DecTransferZiegel
+            GotoTmpA
+            IncTransferZiegel
+        sonst
+            TransferSchritt
+            GotoTmpA
+            TransferSchritt
+        endewenn
+        GotoCallStack
+    endewiederhole
+    
+    {dec callstack ptr}
+    GotoCallStack
+    RechtsDrehen
+    RechtsDrehen
+    Schritt
+    MarkeLöschen
+    LinksDrehen
+    Schritt
+    Schritt
+    MarkeSetzen(gelb)
+
+    {instr ptr mit tmpA}
+    zuHause
+    Schritt
+    LinksDrehen
+    Schritt
+    MarkeSetzen(rot)
+    
+    GotoTmpA
+    DecZahlBetrag
+    wiederhole solange nicht IstZahlNull
+        zuHause
+        Schritt
+        LinksDrehen
+        wiederhole solange nicht IstMarke(rot)
+            Schritt
+        endewiederhole
+        MarkeLöschen
+        Schritt
+        Schritt
+        MarkeSetzen(rot)
+        
+        GotoTmpA
+        DecZahlBetrag
+    endewiederhole
+endeMethode
+
+
+
+
+Methode BefehlExtension
+    wenn IstZiegel(1) dann
+        call
+    endewenn
+    wenn IstZiegel(2) dann
+        ret
+    endewenn
+    wenn IstZiegel(3) dann
+        
+    endewenn
+    wenn IstZiegel(4) dann
+        
+    endewenn
+    wenn IstZiegel(5) dann
+        
+    endewenn
+    wenn IstZiegel(6) dann
+        
+    endewenn
+    wenn IstZiegel(7) dann
+        
+    endewenn
+    wenn IstZiegel(8) dann
+        
+    endewenn
+    wenn IstZiegel(9) dann
+        
+    endewenn
+    wenn IstZiegel(10) dann
+        
+    endewenn
+endeMethode
+
+Methode naechsterBefehl
+    GotoAktInst
+    LinksDrehen
+
+    wenn NichtIstZiegel dann
+        Beenden
+    endewenn
+    wenn IstZiegel(1) dann
+        lda
+        zuHause
+    endewenn
+    wenn IstZiegel(2) dann
+        sta
+        zuHause
+    endewenn
+    wenn IstZiegel(3) dann
+        add
+        zuHause
+    endewenn
+    wenn IstZiegel(4) dann
+        neg
+        zuHause
+    endewenn
+    wenn IstZiegel(5) dann
+        jmp
+        zuHause
+    endewenn
+    wenn IstZiegel(6) dann
+        jnz
+        zuHause
+    endewenn
+    wenn IstZiegel(7) dann
+        ldad
+        zuHause
+    endewenn
+    wenn IstZiegel(8) dann
+        stad
+        zuHause
+    endewenn
+    wenn IstZiegel(9) dann
+        mka
+        zuHause
+    endewenn
+    wenn IstZiegel(10) dann
+        MarkeLöschen
+        RechtsDrehen
+        Schritt
+        Schritt
+        LinksDrehen
+        MarkeSetzen(rot)
+        BefehlExtension
+        zuHause
+    endewenn
+    
+    zuHause
+    Schritt
+    LinksDrehen
+    wiederhole solange nicht IstMarke(rot)
+        Schritt
+    endewiederhole
+    MarkeLöschen
+    Schritt
+    Schritt
+    MarkeSetzen(rot)
+endeMethode
+
+
+Methode Setup
+    zuHause
+    Schritt
+    LinksDrehen
+    Schritt
+    MarkeSetzen(rot)
+
+    GotoTmpA
+    InitZahl
+    
+    wiederhole 2 mal
+        LinksDrehen
+        Schritt
+        Schritt
+        RechtsDrehen
+        InitZahl
+    endewiederhole
+
+    GotoMemStart
+    Schritt
+    RechtsDrehen
+    Schritt
+    InitZahl
+    
+    zuHause
+    wiederhole 30 mal
+        Schritt
+    endewiederhole
+    LinksDrehen
+    Schritt
+    RechtsDrehen
+    MarkeSetzen(gelb)
+    Schritt
+    InitZahl
+
+    zuHause
+endeMethode
+
+Programm
+    Setup
+    wiederhole immer
+        {Warten}
+        naechsterBefehl
+    endewiederhole
+endeProgramm
