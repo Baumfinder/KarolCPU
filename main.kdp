@@ -1012,7 +1012,7 @@ endeMethode
 
 Methode jnz
     GotoAkk
-    wenn nicht IstZahlNull dann
+    wenn IstZahlNull dann
         jmp
     endewenn
 endeMethode
