@@ -18,7 +18,7 @@
 12. ret          X : Springt zu oberster [num] im Callstack
 13. jnz  [num]   - : springt zu Instruktion [num], wenn Akkumulator nicht Null ist
 14. jp   [num]   - : springt zu Instruktion [num], wenn Akkumulator positiv ist
-14. jn   [num]   - : springt zu Instruktion [num], wenn Akkumulator negativ ist
+15. jn   [num]   - : springt zu Instruktion [num], wenn Akkumulator negativ ist
 
 
 Assembler:
