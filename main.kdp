@@ -1010,7 +1010,7 @@ Methode jmp
     endewiederhole
 endeMethode
 
-Methode jnz
+Methode jz
     GotoAkk
     wenn IstZahlNull dann
         jmp
@@ -1355,7 +1355,26 @@ Methode ret
     endewiederhole
 endeMethode
 
+Methode jnz
+    GotoAkk
+    wenn nicht IstNull dann
+        jmp
+    endewenn
+endeMethode
 
+Methode jp
+    GotoAkk
+    wenn nicht IstNegativ dann
+        jmp
+    endewenn
+endeMethode
+
+Methode jn
+    GotoAkk
+    wenn IstNegativ dann
+        jmp
+    endewenn
+endeMethode
 
 
 Methode BefehlExtension
@@ -1366,13 +1385,13 @@ Methode BefehlExtension
         ret
     endewenn
     wenn IstZiegel(3) dann
-        
+        jnz
     endewenn
     wenn IstZiegel(4) dann
-        
+        jp
     endewenn
     wenn IstZiegel(5) dann
-        
+        jnp
     endewenn
     wenn IstZiegel(6) dann
         
@@ -1419,7 +1438,7 @@ Methode naechsterBefehl
         zuHause
     endewenn
     wenn IstZiegel(6) dann
-        jnz
+        jz
         zuHause
     endewenn
     wenn IstZiegel(7) dann

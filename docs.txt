@@ -6,7 +6,7 @@
 3.  add  [addr]  X : addiert Wert von Addresse zu Akkumulator und speichert Ergebnis im Akkumulator (A + M -> A)
 4.  neg          X : Negiert Akkumulator (-A -> A)
 5.  jmp  [num]   X : springt zu Instruktion [num]
-6.  jz  [num]    X : springt zu Instruktion [num], wenn Akkumulator Null ist
+6.  jz   [num]   X : springt zu Instruktion [num], wenn Akkumulator Null ist
 7.  ldad [addr]  X : lädt Wert der Adresse in [addr] in den Akkumulator ([[addr]] -> A)
 8.  stad [addr]  X : speichert Wert von Akkumulator in der Adresse in [addr] (A -> [[addr]])
 9.  mka  [num]   X : speichert [num] in Akkumulator
@@ -16,6 +16,8 @@
 
 11. call [num]   X : Speichert akt. Instr im Callstack, Spring zu Instruktion [num]
 12. ret          X : Springt zu oberster [num] im Callstack
+13. jnz  [num]   - : springt zu Instruktion [num], wenn Akkumulator nicht Null ist
+14. jp   [num]   - : springt zu Instruktion [num], wenn Akkumulator positivk
 
 Assembler:
 	- label [name] : label für sprünge
