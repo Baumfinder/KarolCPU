@@ -1357,21 +1357,21 @@ endeMethode
 
 Methode jnz
     GotoAkk
-    wenn nicht IstNull dann
+    wenn nicht IstZahlNull dann
         jmp
     endewenn
 endeMethode
 
 Methode jp
     GotoAkk
-    wenn nicht IstNegativ dann
+    wenn nicht IstZahlNegativ dann
         jmp
     endewenn
 endeMethode
 
 Methode jn
     GotoAkk
-    wenn IstNegativ dann
+    wenn IstZahlNegativ dann
         jmp
     endewenn
 endeMethode
@@ -1391,7 +1391,7 @@ Methode BefehlExtension
         jp
     endewenn
     wenn IstZiegel(5) dann
-        jnp
+        jn
     endewenn
     wenn IstZiegel(6) dann
         
